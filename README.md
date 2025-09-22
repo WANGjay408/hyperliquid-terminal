@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hyperliquid Markets Mini Terminal (PWA)
 
-## Getting Started
+A **mobile-first trading terminal** built with **Next.js (App Router) + TypeScript + Tailwind CSS**.  
+The app provides real-time market data (price chart, order book, trades), and supports **Progressive Web App (PWA)** installation.
 
-First, run the development server:
+---
 
+## ✨ Features
+
+- **Markets & Pair Selection**
+    - Search and select trading pairs (spot & perps)
+    - Updates the main view dynamically
+
+- **Main View**
+    - Price chart (TradingView Lightweight Charts)
+    - Order book (L2 aggregated bids/asks)
+    - Latest trades (recent fills list)
+
+- **Progressive Web App (PWA)**
+    - Installable (manifest + service worker)
+    - Offline support (app shell + last-viewed data)
+    - Passes Lighthouse PWA checks
+    - Mobile-first (≤ 428px), desktop layout optional
+
+---
+
+## 🎁 Bonus Features (planned/optional)
+
+- WebSocket live updates (`wss://api.hyperliquid.xyz/ws`)
+- Order book price aggregation (0.1 / 1 / 10 steps)
+- Correct decimal handling per market metadata
+- Account lookup (wallet address → account value, PnL, positions, trades)
+- Scan wallet address via QR code
+- Live account streaming (`activeAssetData`, `userEvents`)
+- Responsive desktop layout (≥ 1024px)
+
+---
+
+## 🛠️ Tech Stack
+
+- [Next.js](https://nextjs.org/) (App Router)
+- [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TradingView Lightweight Charts](https://github.com/tradingview/lightweight-charts)
+- State management: **RxJS** (or Zustand alternative)
+- PWA via [next-pwa](https://github.com/shadowwalker/next-pwa)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone git@github.com:WANGjay408/hyperliquid-terminal.git
+cd hyperliquid-terminal
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run dev server
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Build & start
+```bash
+npm run build
+npm start
+```
+---
 
-## Learn More
+## 📱 PWA
 
-To learn more about Next.js, take a look at the following resources:
+- The app can be **installed to home screen** on mobile devices
+- Works offline with cached app shell + last viewed data
+- Passes **Lighthouse PWA checks**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
+## 📦 Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Vercel (recommended)
+1. Push the repo to GitHub
+2. Import into [Vercel](https://vercel.com/)
+3. Deploy with 1 click 🚀
 
-## Deploy on Vercel
+### Netlify (alternative)
+```bash
+npm run build
+# Deploy the `.next/` output folder
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

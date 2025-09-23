@@ -19,6 +19,10 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
+    rules: {
+      // 关闭禁止 any 的规则
+      "@typescript-eslint/no-explicit-any": "off",
+    },
   },
 ];
 

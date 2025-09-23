@@ -1,43 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getMarkets } from "@/lib/hyperliquid";
 
-const mockPairs = ["BTC-USDT", "ETH-USDT", "SOL-USDT", "AVAX-USDT"];
+export default function Markets({ onSelectPair }: { onSelectPair: (p: string) => void }) {
+    const [pairs, setPairs] = useState<string[]>([]);
+    const [selected, setSelected] = useState<string | null>(null);
 
-export default function Markets() {
-    const [search, setSearch] = useState("");
-    const [selected, setSelected] = useState("BTC-USDT");
-
-    const filtered = mockPairs.filter((p) =>
-        p.toLowerCase().includes(search.toLowerCase())
-    );
+    useEffect(() => {
+        (async () => {
+            try {
+                const list = await getMarkets();
+                setPairs(list);
+                if (list.length > 0) {
+                    setSelected(list[0]);
+                    onSelectPair(list[0]);
+                }
+            } catch (err) {
+                console.error("Failed to load markets:", err);
+            }
+        })();
+    }, [onSelectPair]);
 
     return (
-        <div>
-            <div className="flex gap-2">
-                <input
-                    type="text"
-                    placeholder="Search pair..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="flex-1 px-3 py-2 rounded bg-gray-800 border border-gray-700 text-sm"
-                />
-            </div>
-            <div className="mt-2 flex gap-2 overflow-x-auto">
-                {filtered.map((pair) => (
-                    <button
-                        key={pair}
-                        onClick={() => setSelected(pair)}
-                        className={`px-3 py-1 rounded ${
-                            selected === pair
-                                ? "bg-blue-600"
-                                : "bg-gray-700 hover:bg-gray-600"
-                        }`}
-                    >
-                        {pair}
-                    </button>
-                ))}
-            </div>
+        <div className="flex gap-2 overflow-x-auto">
+            {pairs.map((pair) => (
+                <button
+                    key={pair}
+                    onClick={() => {
+                        setSelected(pair);
+                        onSelectPair(pair);
+                    }}
+                    className={`px-3 py-1 rounded ${
+                        selected === pair ? "bg-blue-600 text-white" : "bg-gray-700 text-gray-300"
+                    }`}
+                >
+                    {pair}
+                </button>
+            ))}
         </div>
     );
 }
+
